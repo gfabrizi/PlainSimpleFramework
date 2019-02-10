@@ -1,0 +1,24 @@
+{
+  "name": "gfabrizi/plain-simple-framework",
+  "description": "Zero dependencies PHP framework",
+  "keywords": [ "framework", "scratch" ],
+  "minimum-stability": "dev",
+  "license": "Blue Oak Model License",
+  "authors": [
+    {
+      "name": "Gianluca Fabrizi",
+      "email": "info@gianlucafabrizi.it"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "ext-pdo": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "gfabrizi\\PlainSimpleFramework\\": "framework/",
+      "App\\": "app/"
+    }
+  }
+}
