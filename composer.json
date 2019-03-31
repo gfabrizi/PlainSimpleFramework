@@ -3,7 +3,7 @@
   "description": "Zero dependencies PHP framework",
   "keywords": [ "framework", "scratch" ],
   "minimum-stability": "dev",
-  "license": "Blue Oak Model License",
+  "license": "MIT",
   "authors": [
     {
       "name": "Gianluca Fabrizi",

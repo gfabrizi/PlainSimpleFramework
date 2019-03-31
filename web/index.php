@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . "/../framework/bootstrap.php";
+require __DIR__ . '/../framework/bootstrap.php';
 
 use gfabrizi\PlainSimpleFramework\Http\Router;
 use gfabrizi\PlainSimpleFramework\Http\Request;

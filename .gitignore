@@ -2,5 +2,7 @@
 *.sublime-workspace
 .DS_Store
 /.idea
+composer.lock
 /vendor
 /db/database.sql
+/db/database.sqlite

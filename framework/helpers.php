@@ -8,9 +8,9 @@
  */
 function app_path(string $file = null)
 {
-    $path = dirname(dirname(__FILE__)) . '/app';
+    $path = dirname(__FILE__, 2) . '/app';
     if ($file) {
-        $path .=  '/' . $file;
+        $path .=  '/' . ltrim($file,'/');
     }
 
     return $path;
@@ -24,9 +24,9 @@ function app_path(string $file = null)
  */
 function web_path(string $file = null)
 {
-    $path = dirname(dirname(__FILE__)) . '/web';
+    $path = dirname(__FILE__, 2) . '/web';
     if ($file) {
-        $path .=  '/' . $file;
+        $path .=  '/' . ltrim($file,'/');
     }
 
     return $path;

@@ -18,22 +18,22 @@ class Router
         $this->namespace = Configurator::getInstance()->get('controllersNamespace', 'App\Controllers');
     }
 
-    public function get($route, $method)
+    public function get($route, $method): void
     {
         $this->get[$this->formatRoute($route)] = $method;
     }
 
-    public function post($route, $method)
+    public function post($route, $method): void
     {
         $this->post[$this->formatRoute($route)] = $method;
     }
 
-    public function put($route, $method)
+    public function put($route, $method): void
     {
         $this->put[$this->formatRoute($route)] = $method;
     }
 
-    public function delete($route, $method)
+    public function delete($route, $method): void
     {
         $this->delete[$this->formatRoute($route)] = $method;
     }
@@ -44,7 +44,7 @@ class Router
      * @param $route (string)
      * @return string
      */
-    private function formatRoute($route)
+    private function formatRoute($route): string
     {
         $result = rtrim($route, '/');
         if ($result === '')
@@ -52,7 +52,7 @@ class Router
             return '/';
         }
 
-        if(false !== strpos($route, '?')) {
+        if (false !== strpos($route, '?')) {
             $arr = explode('?', $route, 2);
             $result = $arr[0];
         }
@@ -62,7 +62,7 @@ class Router
         return $result;
     }
 
-    private function defaultRequestHandler()
+    private function defaultRequestHandler(): void
     {
         header("{$this->request->get('serverProtocol')} 404 Not Found");
     }
@@ -70,7 +70,7 @@ class Router
     /**
      * Resolves the route and manages the request, forwarding it to designed callback or controller
      */
-    function resolve()
+    protected function resolve(): void
     {
         $callback = null;
         $methodDictionary = $this->{strtolower($this->request->get('requestMethod'))};
@@ -81,8 +81,9 @@ class Router
             $callback = $methodDictionary[$formattedRoute];
         } else {
             preg_match('/(\/.*)\/(.*)$/', $formattedRoute, $matches);
-            if ((count($matches) == 3) && isset($methodDictionary[$matches[1] . '/{param}'])) {
-                $callback = $methodDictionary[$matches[1] . '/{param}'];
+            $matchAndParam = $matches[1] . '/{param}';
+            if (isset($methodDictionary[$matchAndParam]) && (count($matches) === 3)) {
+                $callback = $methodDictionary[$matchAndParam];
                 $param[] = $matches[2];
             }
         }
@@ -96,7 +97,7 @@ class Router
         if (is_callable($callback)) {
             echo call_user_func_array($callback, $param);
         } else {
-            list($class, $method) = explode('@', $callback);
+            [$class, $method] = explode('@', $callback);
             $classname = $this->namespace . '\\' . $class;
             if (class_exists($classname) && method_exists($classname, $method)) {
                 $controller = new $classname;
@@ -108,7 +109,7 @@ class Router
         }
     }
 
-    function __destruct()
+    public function __destruct()
     {
         $this->resolve();
     }

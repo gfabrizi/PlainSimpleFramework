@@ -24,8 +24,9 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
     {
         if (true === $removeId){
             $fields = static::$fields;
+            $key = array_search('id', $fields, true);
 
-            if (false !== ($key = array_search('id', $fields))) {
+            if (false !== $key) {
                 unset($fields[$key]);
             }
 
@@ -52,7 +53,7 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
      */
     public function get($property)
     {
-        if (in_array($property, static::getFields())) {
+        if (in_array($property, static::getFields(), true)) {
             return $this->{$property};
         }
         return null;
@@ -67,7 +68,7 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
      */
     public function set($property, $value): EntityInterface
     {
-        if (in_array($property, static::getFields())) {
+        if (in_array($property, static::getFields(), true)) {
             $this->{$property} = $value;
         }
         return $this;

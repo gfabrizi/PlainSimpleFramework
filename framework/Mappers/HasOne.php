@@ -20,17 +20,17 @@ class HasOne implements RelationInterface
         $this->foreignColumn = $foreignColumn;
     }
 
-    public function getTargetClass()
+    public function getTargetClass(): string
     {
         return $this->targetClass;
     }
 
-    public function getLocalColumn()
+    public function getLocalColumn(): string
     {
         return $this->localColumn;
     }
 
-    public function getForeignColumn()
+    public function getForeignColumn(): string
     {
         return $this->foreignColumn;
     }

@@ -12,6 +12,20 @@ Are you sure? I mean, I don't see why you want to do this... anyway if you are s
 Yes, sure! Now we're talking!
 
 ## How to use
+### Create a new project
+Create a new project with composer, by issuing the command:
+```bash
+composer create-project --prefer-dist --stability=dev gfabrizi/plain-simple-framework my-app
+```
+(here `my-app` is the name of the new folder where you want the project to be downloaded)
+
+Assuming that you have PHP >= 7.2 installed and configured on your machine, you can start a local web server with:
+```bash
+php -S localhost:8000 -t my-app/web/
+```
+
+Now you can open you web browser and go to `http://localhost:8000` to see your app.
+
 ### The config file
 There is a basic config file located at `app/config/config.php`; it contains the parameters used to connect to your MySql database and some other basic settings.
 

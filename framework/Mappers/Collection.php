@@ -1,9 +1,9 @@
 <?php
 namespace gfabrizi\PlainSimpleFramework\Mappers;
 
-use Exception;
 use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 use Iterator;
+use RuntimeException;
 
 /**
  * Class Collection
@@ -24,15 +24,15 @@ abstract class Collection implements Iterator
      * Collection constructor.
      * @param array $raw
      * @param IdentityMapper|null $mapper
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function __construct(array $raw = [], IdentityMapper $mapper = null)
     {
         $this->raw = $raw;
         $this->total = count($raw);
 
-        if (count($raw) && null === $mapper) {
-            throw new Exception('A mapper is needed to generate an entity');
+        if (null === $mapper && count($raw)) {
+            throw new RuntimeException('A mapper is needed to generate an entity');
         }
 
         $this->mapper = $mapper;
@@ -42,14 +42,14 @@ abstract class Collection implements Iterator
      * Add an Entity to the Collection
      *
      * @param EntityInterface $entity
-     * @throws Exception
+     * @throws RuntimeException
      */
-    public function add(EntityInterface $entity)
+    public function add(EntityInterface $entity): void
     {
         $class = $this->getTargetClass();
 
         if (!$entity instanceof $class) {
-            throw new Exception('This is a collection of type ' . $class);
+            throw new RuntimeException('This is a collection of type ' . $class);
         }
 
         $this->notifyAccess();

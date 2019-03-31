@@ -16,7 +16,7 @@ class SqliteConnector implements DbConnectorInterface
     public function getPdo(): PDO
     {
         if (null === $this->pdo) {
-            $this->pdo = new PDO("sqlite:" . __DIR__ . "/../.." . $this->dbConfig['filename']);
+            $this->pdo = new PDO('sqlite:' . __DIR__ . '/../..' . $this->dbConfig['filename']);
         }
         return $this->pdo;
     }

@@ -3,9 +3,9 @@ namespace gfabrizi\PlainSimpleFramework\Mappers;
 
 interface RelationInterface
 {
-    public function getTargetClass();
+    public function getTargetClass(): string;
 
-    public function getLocalColumn();
+    public function getLocalColumn(): string;
 
-    public function getForeignColumn();
+    public function getForeignColumn(): string;
 }

@@ -3,12 +3,12 @@ namespace gfabrizi\PlainSimpleFramework\Http;
 
 class Request implements RequestInterface
 {
-    function __construct()
+    public function __construct()
     {
         $this->bootstrapSelf();
     }
 
-    private function bootstrapSelf()
+    private function bootstrapSelf(): void
     {
         foreach($_SERVER as $key => $value)
         {
@@ -29,7 +29,7 @@ class Request implements RequestInterface
         return $result;
     }
 
-    public function getBody()
+    public function getBody(): array
     {
         $result = array();
 
@@ -44,7 +44,7 @@ class Request implements RequestInterface
                 $result[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         } else if ($this->get('requestMethod') === 'PUT') {
-            $result[] = file_get_contents("php://input");
+            $result[] = file_get_contents('php://input');
         }
 
         return $result;
@@ -52,6 +52,6 @@ class Request implements RequestInterface
 
     public function get($property)
     {
-        return isset($this->{$property}) ? $this->{$property} : null;
+        return $this->{$property} ?? null;
     }
 }

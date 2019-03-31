@@ -28,15 +28,15 @@ class Response implements ResponseInterface
      */
     private function manageResponse(array $data): string
     {
-        extract($data);
+        $_mainLayout = $this->defaultLayout;
+        extract($data, EXTR_SKIP);
 
         ob_start();
-        require app_path() . $this->viewsUri . '/' . $this->view . '.php';
+        require app_path($this->viewsUri . '/' . $this->view . '.php');
         $contentInLayout = ob_get_clean();
 
-        $_mainLayout = isset($_mainLayout) ? $_mainLayout : $this->defaultLayout;
         ob_start();
-        require app_path(). $this->viewsUri . '/' . $_mainLayout . '.php';
+        require app_path($this->viewsUri . '/' . $_mainLayout . '.php');
         $output = ob_get_clean();
 
         return $output;

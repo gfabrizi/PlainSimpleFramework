@@ -1,6 +1,7 @@
 <?php
 namespace gfabrizi\PlainSimpleFramework\Mappers;
 
+use Exception;
 use gfabrizi\PlainSimpleFramework\Config\Configurator;
 use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 use PDO;
@@ -29,7 +30,7 @@ abstract class IdentityMapper
      * @param string $tableName
      * @return string
      */
-    protected function getSelectQuery(string $tableName)
+    protected function getSelectQuery(string $tableName): string
     {
         $selectAllQuery = $this->getSelectAllQuery($tableName);
         $query = sprintf('%s WHERE %s.id=?', $selectAllQuery, $this->getTargetClass()::getAlias());
@@ -42,9 +43,11 @@ abstract class IdentityMapper
      * @param string $tableName
      * @return string
      */
-    protected function getSelectAllQuery(string $tableName)
+    protected function getSelectAllQuery(string $tableName): string
     {
         if ($relations = $this->getRelations()) {
+            $selectFields = array();
+            $joinClause = array();
             $selectFields[] = $this->getTargetClass()::getAlias() . '.*';
 
             /** @var RelationInterface $relation */
@@ -81,7 +84,7 @@ abstract class IdentityMapper
      * @param string $tableName
      * @return string
      */
-    protected function getInsertQuery(string $tableName)
+    protected function getInsertQuery(string $tableName): string
     {
         $keys = $this->getTargetClass()::getFields(true);
         $columns = implode(', ', $keys);
@@ -98,7 +101,7 @@ abstract class IdentityMapper
      * @param string $tableName
      * @return string
      */
-    protected function getRemoveQuery(string $tableName)
+    protected function getRemoveQuery(string $tableName): string
     {
         $query = sprintf('DELETE FROM %s WHERE id=?;', $tableName);
 
@@ -133,7 +136,7 @@ abstract class IdentityMapper
      * Returns a Collection with all the table's rows
      *
      * @return Collection
-     * @throws \Exception
+     * @throws Exception
      */
     public function findAll(): Collection
     {
@@ -158,7 +161,7 @@ abstract class IdentityMapper
      *
      * @param EntityInterface $entity
      */
-    public function insert(EntityInterface $entity)
+    public function insert(EntityInterface $entity): void
     {
         if (!$this->getInsertStmt()) {
             $insertQuery = $this->getInsertQuery($this->tableName);
@@ -173,7 +176,7 @@ abstract class IdentityMapper
      *
      * @param int $id
      */
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         if (!$this->getRemoveStmt()) {
             $removeQuery = $this->getRemoveQuery($this->tableName);
@@ -188,7 +191,7 @@ abstract class IdentityMapper
      *
      * @param RelationInterface $relation
      */
-    protected function addRelation(RelationInterface $relation)
+    protected function addRelation(RelationInterface $relation): void
     {
         $this->relations[] = $relation;
     }

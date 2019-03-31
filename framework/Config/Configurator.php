@@ -23,7 +23,7 @@ class Configurator
     {
     }
 
-    public static function getInstance()
+    public static function getInstance(): Configurator
     {
         if (null === self::$instance) {
             self::$instance = new self();
@@ -32,7 +32,7 @@ class Configurator
         return self::$instance;
     }
 
-    private function setup()
+    private function setup(): void
     {
         $dbConfig = [];
         $config = [];
@@ -59,6 +59,6 @@ class Configurator
 
     public function get(string $param, string $default = null)
     {
-        return isset($this->config[$param]) ? $this->config[$param] : $default;
+        return $this->config[$param] ?? $default;
     }
 }
