@@ -1,6 +1,7 @@
 <?php
 namespace gfabrizi\PlainSimpleFramework\Mappers;
 
+use Countable;
 use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 use Iterator;
 use RuntimeException;
@@ -11,7 +12,7 @@ use RuntimeException;
  *
  * @package gfabrizi\PlainSimpleFramework\Mappers
  */
-class Collection implements Iterator
+class Collection implements Iterator, Countable
 {
     protected $mapper;
     protected $total = 0;
@@ -119,5 +120,10 @@ class Collection implements Iterator
     public function getTargetClass(): string
     {
         return $this->mapper->getTargetClass();
+    }
+
+    public function count()
+    {
+        return $this->total;
     }
 }

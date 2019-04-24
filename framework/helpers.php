@@ -17,6 +17,22 @@ function app_path(string $file = null)
 }
 
 /**
+ * Path of the framework folder
+ *
+ * @param string|null $file
+ * @return mixed
+ */
+function framework_path(string $file = null)
+{
+    $path = dirname(__FILE__, 2) . '/framework';
+    if ($file) {
+        $path .=  '/' . ltrim($file,'/');
+    }
+
+    return $path;
+}
+
+/**
  * Path of the web folder
  *
  * @param string|null $file

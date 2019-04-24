@@ -73,4 +73,20 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
         }
         return $this;
     }
+
+    /**
+     * Generic JSON Serialize method
+     *
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        $data = array();
+
+        foreach (static::getFields() as $field) {
+            $data[$field] = $this->get($field);
+        }
+
+        return $data;
+    }
 }

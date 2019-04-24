@@ -2,6 +2,7 @@
 namespace gfabrizi\PlainSimpleFramework\Http;
 
 use gfabrizi\PlainSimpleFramework\Config\Configurator;
+use gfabrizi\PlainSimpleFramework\Responses\Response;
 
 class Router
 {
@@ -64,7 +65,11 @@ class Router
 
     private function defaultRequestHandler(): void
     {
-        header("{$this->request->get('serverProtocol')} 404 Not Found");
+        if (true === headers_sent()) {
+            http_response_code(404);
+        } else {
+            header("{$this->request->get('serverProtocol')} 404 Not Found");
+        }
     }
 
     /**
@@ -81,10 +86,12 @@ class Router
             $callback = $methodDictionary[$formattedRoute];
         } else {
             preg_match('/(\/.*)\/(.*)$/', $formattedRoute, $matches);
-            $matchAndParam = $matches[1] . '/{param}';
-            if (isset($methodDictionary[$matchAndParam]) && (count($matches) === 3)) {
-                $callback = $methodDictionary[$matchAndParam];
-                $param[] = $matches[2];
+            if (count($matches) > 0 ) {
+                $matchAndParam = $matches[1] . '/{param}';
+                if (isset($methodDictionary[$matchAndParam]) && (count($matches) === 3)) {
+                    $callback = $methodDictionary[$matchAndParam];
+                    $param[] = $matches[2];
+                }
             }
         }
 

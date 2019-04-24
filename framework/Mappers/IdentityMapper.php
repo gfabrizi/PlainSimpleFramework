@@ -14,6 +14,7 @@ abstract class IdentityMapper
     protected $selectStmt;
     protected $selectAllStmt;
     protected $insertStmt;
+    protected $updateStmt;
     protected $removeStmt;
     protected $relations = [];
 
@@ -96,6 +97,27 @@ abstract class IdentityMapper
     }
 
     /**
+     * Initialize the Statement Update
+     *
+     * @param string $tableName
+     * @param int $id
+     * @return string
+     */
+    protected function getUpdateQuery(string $tableName, int $id): string
+    {
+//        UPDATE table_name SET field1 = new-value1, field2 = new-value2
+//        [WHERE Clause]
+
+        $keys = $this->getTargetClass()::getFields(true);
+        $columns = implode(' = ?, ', $keys);
+        $columns .= ' = ?';
+
+        $query = sprintf('UPDATE %s SET %s WHERE id = %d', $tableName, $columns, $id);
+
+        return $query;
+    }
+
+    /**
      * Initialize the Statement Delete
      *
      * @param string $tableName
@@ -136,7 +158,7 @@ abstract class IdentityMapper
      * @return Collection
      * @throws Exception
      */
-    public function findAll(): Collection
+    public function findAll(): ?Collection
     {
         if (!$this->getSelectAllStmt()) {
             $selectAllQuery = $this->getSelectAllQuery($this->tableName);
@@ -158,15 +180,32 @@ abstract class IdentityMapper
      * Persists the Entity on db, delegating to child's doInsert() all the Entity's details
      *
      * @param EntityInterface $entity
+     * @return int
      */
-    public function insert(EntityInterface $entity): void
+    public function insert(EntityInterface $entity): int
     {
         if (!$this->getInsertStmt()) {
             $insertQuery = $this->getInsertQuery($this->tableName);
             $this->setInsertStmt($this->pdo->prepare($insertQuery));
         }
 
-        $this->doInsert($entity);
+        return $this->doInsert($entity);
+    }
+
+    /**
+     * Persists the Entity on db, delegating to child's doInsert() all the Entity's details
+     *
+     * @param EntityInterface $entity
+     * @return int
+     */
+    public function update(EntityInterface $entity): int
+    {
+        if (!$this->getUpdateStmt()) {
+            $insertQuery = $this->getUpdateQuery($this->tableName, $entity->get('id'));
+            $this->setUpdateStmt($this->pdo->prepare($insertQuery));
+        }
+
+        return $this->doUpdate($entity);
     }
 
     /**
@@ -248,6 +287,17 @@ abstract class IdentityMapper
         return $this;
     }
 
+    public function getUpdateStmt(): ?PDOStatement
+    {
+        return $this->updateStmt;
+    }
+
+    public function setUpdateStmt(PDOStatement $stmt): IdentityMapper
+    {
+        $this->updateStmt = $stmt;
+        return $this;
+    }
+
     public function getRemoveStmt(): ?PDOStatement
     {
         return $this->removeStmt;
@@ -273,5 +323,7 @@ abstract class IdentityMapper
 
     abstract protected function doHydrateEntity(array $raw): EntityInterface;
 
-    abstract protected function doInsert(EntityInterface $entity);
+    abstract protected function doInsert(EntityInterface $entity): int;
+
+    abstract protected function doUpdate(EntityInterface $entity): int;
 }

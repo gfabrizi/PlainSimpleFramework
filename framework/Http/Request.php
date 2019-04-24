@@ -10,7 +10,7 @@ class Request implements RequestInterface
 
     private function bootstrapSelf(): void
     {
-        foreach($_SERVER as $key => $value)
+        foreach ($_SERVER as $key => $value)
         {
             $this->{$this->toCamelCase($key)} = $value;
         }
@@ -21,7 +21,7 @@ class Request implements RequestInterface
         $result = strtolower($string);
 
         preg_match_all('/_[a-z]/', $result, $matches);
-        foreach($matches[0] as $match)
+        foreach ($matches[0] as $match)
         {
             $c = str_replace('_', '', strtoupper($match));
             $result = str_replace($match, $c, $result);
@@ -29,19 +29,32 @@ class Request implements RequestInterface
         return $result;
     }
 
+    /**
+     * Set custom headers from this request as an array $key => $value
+     *
+     * @param array $headers
+     */
+    public function setHeaders(array $headers): void
+    {
+        foreach ($headers as $key => $value)
+        {
+            $this->{$this->toCamelCase($key)} = $value;
+        }
+    }
+
     public function getBody(): array
     {
         $result = array();
 
-        if($this->get('requestMethod') === 'GET') {
-            foreach($_GET as $key => $value)
+        if ($this->get('requestMethod') === 'GET') {
+            foreach ($_GET as $key => $value)
             {
-                $result[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                $result[$key] = filter_var($_GET[$key], FILTER_SANITIZE_SPECIAL_CHARS);
             }
         } else if ($this->get('requestMethod') === 'POST') {
-            foreach($_POST as $key => $value)
+            foreach ($_POST as $key => $value)
             {
-                $result[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                $result[$key] = filter_var($_POST[$key], FILTER_SANITIZE_SPECIAL_CHARS);
             }
         } else if ($this->get('requestMethod') === 'PUT') {
             $result[] = file_get_contents('php://input');

@@ -8,7 +8,9 @@ class JsonResponse implements ResponseInterface
     public function __construct($data, int $code = 200)
     {
         http_response_code($code);
-        header('Content-Type: application/json;charset=utf-8');
+        if (false === headers_sent()) {
+            header('Content-Type: application/json;charset=utf-8');
+        }
         if ($data) {
             $output = $this->manageResponse($data);
             echo $output;
