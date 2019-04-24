@@ -36,7 +36,12 @@ class Configurator
     {
         $dbConfig = [];
         $config = [];
-        require app_path('/Config/config.php');
+        if ('test' === $_ENV['APP_ENV']) {
+            $configFile = framework_path('/Config/config-test.php');
+        } else {
+            $configFile = app_path('/Config/config.php');
+        }
+        require $configFile;
 
         $this->config = $config;
         $this->dbConfig = $dbConfig;

@@ -11,6 +11,9 @@ Are you sure? I mean, I don't see why you want to do this... anyway if you are s
 **Can I use it for learning the basics of a simple PHP framework?**  
 Yes, sure! Now we're talking!
 
+**No external dependencies... so why there are a `composer.json` and a `composer.lock`?**  
+The `composer.json` file is used primary for autoloading classes. Also for installing a local version of phpunit used for testing the framework (dev dependency).
+
 ## How to use
 ### Create a new project
 Create a new project with composer, by issuing the command:
