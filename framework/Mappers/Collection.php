@@ -11,7 +11,7 @@ use RuntimeException;
  *
  * @package gfabrizi\PlainSimpleFramework\Mappers
  */
-abstract class Collection implements Iterator
+class Collection implements Iterator
 {
     protected $mapper;
     protected $total = 0;
@@ -116,5 +116,8 @@ abstract class Collection implements Iterator
         return (null !== $this->current());
     }
 
-    abstract public function getTargetClass(): string;
+    public function getTargetClass(): string
+    {
+        return $this->mapper->getTargetClass();
+    }
 }

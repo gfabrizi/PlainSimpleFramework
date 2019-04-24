@@ -111,15 +111,7 @@ Collections are aggregates of entities.
 You can place Collections in `app/Mappers` alongside with your Mappers.
 Each collections have to extends `framework\Mappers\Collection`.
 
-The only method necessary is `getTargetClass()`, used to specify the Classname of the Entities used in the collection:
-```php
-class UserCollection extends Collection {
-    public function getTargetClass(): string
-    {
-        return User::class;
-    }
-}
-```
+Custom Collections are not really necessaries, unless you want to customize the standard behaviour. Otherwise, you can use the base Collection class.
 
 ### Views
 Views are simple html files saved as `.php` file in `app/Views`.  

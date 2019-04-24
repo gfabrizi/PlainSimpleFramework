@@ -103,9 +103,7 @@ abstract class IdentityMapper
      */
     protected function getRemoveQuery(string $tableName): string
     {
-        $query = sprintf('DELETE FROM %s WHERE id=?;', $tableName);
-
-        return $query;
+        return sprintf('DELETE FROM %s WHERE id=?;', $tableName);
     }
 
     /**
@@ -261,11 +259,19 @@ abstract class IdentityMapper
         return $this;
     }
 
+    /**
+     * @param array $raw
+     * @return Collection
+     * @throws Exception
+     */
+    public function getCollection(array $raw): Collection
+    {
+        return new Collection($raw, $this);
+    }
+
+    abstract public function getTargetClass(): string;
+
     abstract protected function doHydrateEntity(array $raw): EntityInterface;
 
     abstract protected function doInsert(EntityInterface $entity);
-
-    abstract protected function getTargetClass(): string;
-
-    abstract public function getCollection(array $raw): Collection;
 }
