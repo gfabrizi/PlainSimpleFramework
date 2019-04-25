@@ -67,4 +67,18 @@ class ResponseTest extends TestCase
         );
     }
 
+    public function testItReturnsAResponseView()
+    {
+        $request = new Request();
+        $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/lorem-ipsum']);
+
+        $router = new Router($request);
+        $router->get('/lorem-ipsum', 'TestController@viewResponse');
+
+        ob_start();
+        $router = null;
+        $output = ob_get_clean();
+
+        $this->assertEquals('Lorem ipsum', $output);
+    }
 }

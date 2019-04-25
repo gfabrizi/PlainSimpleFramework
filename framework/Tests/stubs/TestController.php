@@ -2,8 +2,8 @@
 namespace gfabrizi\PlainSimpleFramework\Tests\stubs;
 
 use gfabrizi\PlainSimpleFramework\Http\RequestInterface;
-use gfabrizi\PlainSimpleFramework\Mappers\Collection;
 use gfabrizi\PlainSimpleFramework\Responses\JsonResponse;
+use gfabrizi\PlainSimpleFramework\Responses\Response;
 use gfabrizi\PlainSimpleFramework\Responses\ResponseInterface;
 
 class TestController
@@ -30,5 +30,12 @@ class TestController
 
         return new JsonResponse($entities);
     }
+
+    public function viewResponse(RequestInterface $request): ResponseInterface
+    {
+        $content = 'ipsum';
+        return new Response('index', compact('content'));
+    }
+
 
 }

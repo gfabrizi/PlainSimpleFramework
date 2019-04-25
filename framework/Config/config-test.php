@@ -2,7 +2,7 @@
 // Base default configuration
 $config['controllersNamespace'] = 'gfabrizi\PlainSimpleFramework\Tests\stubs';
 $config['defaultLayout'] = 'BaseLayout';
-$config['viewsUri'] = '/Views';
+$config['viewsUri'] = '/../framework/Tests/views';
 
 // Can be one of 'sqlite' or 'mysql'
 $config['dbType'] = 'sqlite';
