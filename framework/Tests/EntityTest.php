@@ -2,7 +2,9 @@
 namespace gfabrizi\PlainSimpleFramework\Tests;
 
 use gfabrizi\PlainSimpleFramework\Mappers\Collection;
+use gfabrizi\PlainSimpleFramework\Tests\faker\EntityCorrelationFaker;
 use gfabrizi\PlainSimpleFramework\Tests\faker\EntityFaker;
+use gfabrizi\PlainSimpleFramework\Tests\stubs\EntityMapperCorrelation;
 use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntityMapper;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +20,6 @@ class EntityTest extends TestCase
         $retrievedEntity = $mapper->find($id);
         $this->assertEquals('Lorem ipsum', $retrievedEntity->get('columnName1'));
         $this->assertEquals('dolor sit amet', $retrievedEntity->get('columnName2'));
-
     }
 
     public function testItCanUpdate()
@@ -74,6 +75,36 @@ class EntityTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $retrievedEntities);
         $this->assertCount(3, $retrievedEntities);
+    }
+
+    public function testItCanCreateAnEntityWithCorrelation()
+    {
+        $mapper = new TestEntityMapper();
+        $entity = EntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
+        $id = $mapper->insert($entity);
+        $this->assertIsInt($id);
+
+        $mapperCorrelation = new EntityMapperCorrelation();
+        $entityWithCorrelation = EntityCorrelationFaker::getInstance()->make(null, $entity, 'JohnDoe94');
+        $correlationId = $mapperCorrelation->insert($entityWithCorrelation);
+        $this->assertIsInt($correlationId);
+
+        $retrievedEntity = $mapperCorrelation->find($correlationId);
+        $this->assertEquals($retrievedEntity->getCorrelated()->get('columnName1'), $entity->get('columnName1'));
+        $this->assertEquals($retrievedEntity->getCorrelated()->get('columnName2'), $entity->get('columnName2'));
+    }
+
+    public function testItIsAddableToACollection()
+    {
+        $mapper = new TestEntityMapper();
+        $entity = EntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
+        $collection = new Collection([], $mapper);
+        $this->assertCount(0, $collection);
+        $collection->add($entity);
+        $this->assertCount(1, $collection);
+        $entity2 = EntityFaker::getInstance()->make(null, 'dumb text', 'for a test');
+        $collection->add($entity2);
+        $this->assertCount(2, $collection);
     }
 
     protected function tearDown(): void
