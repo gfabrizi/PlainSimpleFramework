@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/gfabrizi/PlainSimpleFramework.svg?branch=master)](https://travis-ci.com/gfabrizi/PlainSimpleFramework)
+
 # PlainSimpleFramework
 **What is this?**  
 This is a simple PHP framework, written as a code test for a job interview. It is written in pure PHP, without external dependencies.
