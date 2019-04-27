@@ -2,7 +2,6 @@
 namespace gfabrizi\PlainSimpleFramework\Http;
 
 use gfabrizi\PlainSimpleFramework\Config\Configurator;
-use gfabrizi\PlainSimpleFramework\Responses\Response;
 
 class Router
 {

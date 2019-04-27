@@ -117,16 +117,12 @@ abstract class IdentityMapper
      */
     protected function getUpdateQuery(string $tableName, int $id): string
     {
-//        UPDATE table_name SET field1 = new-value1, field2 = new-value2
-//        [WHERE Clause]
 
         $keys = $this->getTargetClass()::getFields(true);
         $columns = implode(' = ?, ', $keys);
         $columns .= ' = ?';
 
-        $query = sprintf('UPDATE %s SET %s WHERE id = %d', $tableName, $columns, $id);
-
-        return $query;
+        return sprintf('UPDATE %s SET %s WHERE id = %d', $tableName, $columns, $id);
     }
 
     /**

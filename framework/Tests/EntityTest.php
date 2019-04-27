@@ -97,11 +97,13 @@ class EntityTest extends TestCase
     public function testItIsAddableToACollection()
     {
         $mapper = new TestEntityMapper();
-        $entity = EntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
         $collection = new Collection([], $mapper);
         $this->assertCount(0, $collection);
+
+        $entity = EntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
         $collection->add($entity);
         $this->assertCount(1, $collection);
+
         $entity2 = EntityFaker::getInstance()->make(null, 'dumb text', 'for a test');
         $collection->add($entity2);
         $this->assertCount(2, $collection);

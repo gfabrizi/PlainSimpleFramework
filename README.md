@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/gfabrizi/PlainSimpleFramework.svg?branch=master)](https://travis-ci.com/gfabrizi/PlainSimpleFramework)
+[![codecov](https://codecov.io/gh/gfabrizi/PlainSimpleFramework/branch/master/graph/badge.svg)](https://codecov.io/gh/gfabrizi/PlainSimpleFramework)
 
 # PlainSimpleFramework
 **What is this?**  
