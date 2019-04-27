@@ -9,13 +9,25 @@ use PDOStatement;
 
 abstract class IdentityMapper
 {
+    /** @var PDO $pdo */
     protected $pdo;
     protected $tableName;
+
+    /** @var PDOStatement $selectStmt */
     protected $selectStmt;
+
+    /** @var PDOStatement $selectAllStmt */
     protected $selectAllStmt;
+
+    /** @var PDOStatement $insertStmt */
     protected $insertStmt;
+
+    /** @var PDOStatement $updateStmt */
     protected $updateStmt;
+
+    /** @var PDOStatement $removeStmt */
     protected $removeStmt;
+
     protected $relations = [];
 
     public function __construct()
