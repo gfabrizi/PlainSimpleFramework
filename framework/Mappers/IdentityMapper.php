@@ -349,7 +349,18 @@ abstract class IdentityMapper
         return $entity->get('id');
     }
 
-    abstract public function getTargetClass(): string;
+    protected function doHydrateEntity(array $raw): EntityInterface
+    {
+        $param = [];
+        $param[] = isset($raw['id']) ? (int)$raw['id'] : null;
 
-    abstract protected function doHydrateEntity(array $raw): EntityInterface;
+        foreach ($this->getTargetClass()::getFields(true) as $field) {
+            $param[] = $raw[$field] ?? null;
+        }
+
+        $targetClass = $this->getTargetClass();
+        return new $targetClass(...$param);
+    }
+
+    abstract public function getTargetClass(): string;
 }

@@ -61,7 +61,10 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
      */
     public function get($property)
     {
-        return $this->attributes[$property]['value'] ?? null;
+        if (isset($this->attributes[$property])) {
+            return $this->attributes[$property]['value'];
+        }
+        return null;
     }
 
     /**
