@@ -5,7 +5,7 @@ use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 use gfabrizi\PlainSimpleFramework\Mappers\HasOne;
 use gfabrizi\PlainSimpleFramework\Mappers\IdentityMapper;
 
-class EntityMapperCorrelation extends IdentityMapper
+class CorrelationEntityMapper extends IdentityMapper
 {
     public function __construct()
     {
@@ -16,7 +16,7 @@ class EntityMapperCorrelation extends IdentityMapper
 
     public function getTargetClass(): string
     {
-        return EntityCorrelation::class;
+        return CorrelationEntity::class;
     }
 
     protected function doHydrateEntity(array $raw): EntityInterface
@@ -31,30 +31,10 @@ class EntityMapperCorrelation extends IdentityMapper
             $correlatedId = $raw['correlated_id'];
         }
 
-        return new EntityCorrelation(
+        return new CorrelationEntity(
             $id,
             $correlatedId,
             $raw['username']
         );
-    }
-
-    protected function doInsert(EntityInterface $entity): int
-    {
-        $this->insertStmt->execute([
-            $entity->get('correlated_id'),
-            $entity->get('username'),
-        ]);
-        $id = $this->pdo->lastInsertId();
-        $entity->set('id', $id);
-        return $id;
-    }
-
-    protected function doUpdate(EntityInterface $entity): int
-    {
-        $this->updateStmt->execute([
-            $entity->get('correlated'),
-            $entity->get('username'),
-        ]);
-        return $entity->get('id');
     }
 }

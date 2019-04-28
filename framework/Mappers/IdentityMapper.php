@@ -327,11 +327,29 @@ abstract class IdentityMapper
         return new Collection($raw, $this);
     }
 
+    protected function doInsert(EntityInterface $entity): int
+    {
+        $param = [];
+        foreach ($this->getTargetClass()::getFields(true) as $field) {
+            $param[] = $entity->get($field);
+        }
+        $this->insertStmt->execute($param);
+        $id = $this->pdo->lastInsertId();
+        $entity->set('id', $id);
+        return $id;
+    }
+
+    protected function doUpdate(EntityInterface $entity): int
+    {
+        $param = [];
+        foreach ($this->getTargetClass()::getFields(true) as $field) {
+            $param[] = $entity->get($field);
+        }
+        $this->updateStmt->execute($param);
+        return $entity->get('id');
+    }
+
     abstract public function getTargetClass(): string;
 
     abstract protected function doHydrateEntity(array $raw): EntityInterface;
-
-    abstract protected function doInsert(EntityInterface $entity): int;
-
-    abstract protected function doUpdate(EntityInterface $entity): int;
 }

@@ -3,7 +3,7 @@ namespace gfabrizi\PlainSimpleFramework\Tests;
 
 use gfabrizi\PlainSimpleFramework\Http\Request;
 use gfabrizi\PlainSimpleFramework\Http\Router;
-use gfabrizi\PlainSimpleFramework\Tests\faker\EntityFaker;
+use gfabrizi\PlainSimpleFramework\Tests\faker\TestEntityFaker;
 use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntityMapper;
 use PHPUnit\Framework\TestCase;
 
@@ -34,10 +34,10 @@ class ResponseTest extends TestCase
     {
         $mapper = new TestEntityMapper();
 
-        $entity = EntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
+        $entity = TestEntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
         $id1 = $mapper->insert($entity);
 
-        $entity = EntityFaker::getInstance()->make(null, 'consectetur adipiscing', 'elit.');
+        $entity = TestEntityFaker::getInstance()->make(null, 'consectetur adipiscing', 'elit.');
         $id2 = $mapper->insert($entity);
 
         $request = new Request();

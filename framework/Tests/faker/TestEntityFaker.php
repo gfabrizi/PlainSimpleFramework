@@ -6,7 +6,7 @@ use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntity;
 use PDO;
 use PDOException;
 
-class EntityFaker
+class TestEntityFaker
 {
     private static $instance;
 
@@ -37,7 +37,7 @@ class EntityFaker
         }
     }
 
-    public static function getInstance(): EntityFaker
+    public static function getInstance(): TestEntityFaker
     {
         if (!self::$instance) {
             self::$instance = new self();

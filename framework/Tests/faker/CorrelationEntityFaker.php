@@ -2,12 +2,11 @@
 namespace gfabrizi\PlainSimpleFramework\Tests\faker;
 
 use gfabrizi\PlainSimpleFramework\Config\Configurator;
-use gfabrizi\PlainSimpleFramework\Tests\stubs\EntityCorrelation;
-use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntity;
+use gfabrizi\PlainSimpleFramework\Tests\stubs\CorrelationEntity;
 use PDO;
 use PDOException;
 
-class EntityCorrelationFaker
+class CorrelationEntityFaker
 {
     private static $instance;
 
@@ -38,7 +37,7 @@ class EntityCorrelationFaker
         }
     }
 
-    public static function getInstance(): EntityCorrelationFaker
+    public static function getInstance(): CorrelationEntityFaker
     {
         if (!self::$instance) {
             self::$instance = new self();
@@ -46,9 +45,9 @@ class EntityCorrelationFaker
         return self::$instance;
     }
 
-    public function make(?int $id, int $correlatedId, string $username): EntityCorrelation
+    public function make(?int $id, int $correlatedId, string $username): CorrelationEntity
     {
-        return new EntityCorrelation($id, $correlatedId, $username);
+        return new CorrelationEntity($id, $correlatedId, $username);
     }
 
     public function reset(): void

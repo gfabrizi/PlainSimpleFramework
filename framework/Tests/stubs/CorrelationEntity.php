@@ -4,7 +4,7 @@ namespace gfabrizi\PlainSimpleFramework\Tests\stubs;
 use gfabrizi\PlainSimpleFramework\Entities\BaseEntity;
 use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 
-class EntityCorrelation extends BaseEntity
+class CorrelationEntity extends BaseEntity
 {
     protected static $tableName = 'entity_correlation';
     protected static $fields = ['id', 'correlated_id', 'username'];

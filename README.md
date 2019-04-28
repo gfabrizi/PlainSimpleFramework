@@ -100,11 +100,10 @@ Identity mappers are what `map` an Entity to the corresponding db entry. You can
 Each Entity should have one Identity Mapper, and each Identity Mapper should extends `framework\Mappers\IdentityMapper` abstract class.  
 For each mapper you have to implement:
 
-*  `doInsert()` the code to insert an entity into the db
-*  `doUpdate()` the code to update an entity into the db
 *  `doHydrateEntity()` this method take an array and *hydrates* it back to an Entity
 *  `getTargetClass()` returns the name of the Entity class
 
+You can provide your own code for the `doInsert()` and `doUpdate()` methods; otherwise, generic ones will be used.
 In the constructor of an Identity Mapper you can also define relations between Entities (for now only HasOne is implemented):
 ```php
 $this->addRelation(new HasOne(User::class, 'user_id', 'id'));

@@ -35,7 +35,7 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
             $key = array_search('id', $fields, true);
 
             if (false !== $key) {
-                unset($fields[$key]);
+                array_splice($fields, $key, 1);
             }
 
             return $fields;

@@ -21,24 +21,4 @@ class TestEntityMapper extends IdentityMapper
             $raw['column_name2']
         );
     }
-
-    protected function doInsert(EntityInterface $entity): int
-    {
-        $this->insertStmt->execute([
-            $entity->get('columnName1'),
-            $entity->get('column_name2'),
-        ]);
-        $id = $this->pdo->lastInsertId();
-        $entity->set('id', $id);
-        return $id;
-    }
-
-    protected function doUpdate(EntityInterface $entity): int
-    {
-        $this->updateStmt->execute([
-            $entity->get('columnName1'),
-            $entity->get('column_name2'),
-        ]);
-        return $entity->get('id');
-    }
 }
