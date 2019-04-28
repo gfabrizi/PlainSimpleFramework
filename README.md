@@ -82,15 +82,13 @@ class User extends BaseEntity
     protected static $tableName = 'users';
     protected static $fields = ['id', 'first_name', 'last_name'];
 
-    protected $id;
-    protected $firstName;
-    protected $lastName;
-
-    public function __construct(int $id, string $firstName, string $lastName)
+    public function __construct(?int $id, string $firstName, string $lastName)
     {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        parent::__construct();
+
+        $this->set('id', $id);
+        $this->set('first_name', $firstName);
+        $this->set('last_name', $lastName);
     }
 }
 ```
@@ -102,10 +100,10 @@ Identity mappers are what `map` an Entity to the corresponding db entry. You can
 Each Entity should have one Identity Mapper, and each Identity Mapper should extends `framework\Mappers\IdentityMapper` abstract class.  
 For each mapper you have to implement:
 
-*  `doInsert()` the code to insert an entity to the db
+*  `doInsert()` the code to insert an entity into the db
+*  `doUpdate()` the code to update an entity into the db
 *  `doHydrateEntity()` this method take an array and *hydrates* it back to an Entity
 *  `getTargetClass()` returns the name of the Entity class
-*  `getCollection()` returns a collection of entities (used when the `findAll()` method is invoked)
 
 In the constructor of an Identity Mapper you can also define relations between Entities (for now only HasOne is implemented):
 ```php

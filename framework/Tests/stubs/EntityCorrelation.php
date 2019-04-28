@@ -2,26 +2,26 @@
 namespace gfabrizi\PlainSimpleFramework\Tests\stubs;
 
 use gfabrizi\PlainSimpleFramework\Entities\BaseEntity;
+use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 
 class EntityCorrelation extends BaseEntity
 {
     protected static $tableName = 'entity_correlation';
     protected static $fields = ['id', 'correlated_id', 'username'];
 
-    protected $id;
-    protected $correlated;
-    protected $username;
-
-    public function __construct(?int $id, TestEntity $correlated, string $username)
+    public function __construct(?int $id, int $correlatedId, string $username)
     {
-        $this->id = $id;
-        $this->correlated = $correlated;
-        $this->username = $username;
+        parent::__construct();
+
+        $this->set('id', $id);
+        $this->set('correlated_id', $correlatedId);
+        $this->set('username', $username);
     }
 
-    public function getCorrelated(): TestEntity
+    public function getCorrelated(): EntityInterface
     {
-        return $this->correlated;
+        $mapper = new TestEntityMapper();
+        return $mapper->find($this->get('correlated_id'));
     }
 
     public function jsonSerialize()
@@ -32,5 +32,4 @@ class EntityCorrelation extends BaseEntity
             'username' => $this->get('username'),
         ];
     }
-
 }

@@ -29,7 +29,7 @@ class EntityFaker
             $sql = 'CREATE TABLE IF NOT EXISTS `test_entity` (
                 `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                 `columnName1` TEXT(100) NOT NULL,
-                `columnName2` TEXT(100) NOT NULL
+                `column_name2` TEXT(100) NOT NULL
             )';
             $this->pdo->exec($sql);
         } catch(PDOException $e) {

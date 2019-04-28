@@ -18,7 +18,7 @@ class TestEntityMapper extends IdentityMapper
         return new TestEntity(
             $id,
             $raw['columnName1'],
-            $raw['columnName2']
+            $raw['column_name2']
         );
     }
 
@@ -26,7 +26,7 @@ class TestEntityMapper extends IdentityMapper
     {
         $this->insertStmt->execute([
             $entity->get('columnName1'),
-            $entity->get('columnName2'),
+            $entity->get('column_name2'),
         ]);
         $id = $this->pdo->lastInsertId();
         $entity->set('id', $id);
@@ -37,7 +37,7 @@ class TestEntityMapper extends IdentityMapper
     {
         $this->updateStmt->execute([
             $entity->get('columnName1'),
-            $entity->get('columnName2'),
+            $entity->get('column_name2'),
         ]);
         return $entity->get('id');
     }

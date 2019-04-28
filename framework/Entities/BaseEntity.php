@@ -8,6 +8,14 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
     protected static $tableName;
     protected static $fields = [];
     protected static $join = [];
+    protected $attributes = [];
+
+    public function __construct()
+    {
+        foreach (self::getFields() as $field) {
+            $this->attributes[$field] = ['value' => null];
+        }
+    }
 
     public static function getTableName()
     {
@@ -48,28 +56,25 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
     /**
      * Magic method to GET Entity properties
      *
-     * @param $property
+     * @param $property string  Column name of the attribute to retrieve
      * @return mixed|null
      */
     public function get($property)
     {
-        if (in_array($property, static::getFields(), true)) {
-            return $this->{$property};
-        }
-        return null;
+        return $this->attributes[$property]['value'] ?? null;
     }
 
     /**
      * Magic method to SET Entity properties
      *
-     * @param $property
-     * @param $value
+     * @param $property string  Column name of the attribute to set
+     * @param $value mixed  Value to set
      * @return EntityInterface
      */
     public function set($property, $value): EntityInterface
     {
-        if (in_array($property, static::getFields(), true)) {
-            $this->{$property} = $value;
+        if (isset($this->attributes[$property])) {
+            $this->attributes[$property]['value'] = $value;
         }
         return $this;
     }

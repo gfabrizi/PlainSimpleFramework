@@ -23,16 +23,17 @@ class EntityMapperCorrelation extends IdentityMapper
     {
         $id = isset($raw['id']) ? (int)$raw['id'] : null;
 
-        if (isset($raw['t_id'], $raw['t_columnName1'], $raw['t_columnName2'])) {
-            $testEntity = new TestEntity($raw['t_id'], $raw['t_columnName1'], $raw['t_columnName2']);
+        $testEntityMapper = new TestEntityMapper();
+        if (isset($raw['t_id'], $raw['t_columnName1'], $raw['t_column_name2'])) {
+            $testEntity = new TestEntity($raw['t_id'], $raw['t_columnName1'], $raw['t_column_name2']);
+            $correlatedId = $testEntityMapper->insert($testEntity);
         } else {
-            $testEntityMapper = new TestEntityMapper();
-            $testEntity = $testEntityMapper->find($raw['correlated_id']);
+            $correlatedId = $raw['correlated_id'];
         }
 
         return new EntityCorrelation(
             $id,
-            $testEntity,
+            $correlatedId,
             $raw['username']
         );
     }
@@ -40,7 +41,7 @@ class EntityMapperCorrelation extends IdentityMapper
     protected function doInsert(EntityInterface $entity): int
     {
         $this->insertStmt->execute([
-            $entity->getCorrelated()->get('id'),
+            $entity->get('correlated_id'),
             $entity->get('username'),
         ]);
         $id = $this->pdo->lastInsertId();

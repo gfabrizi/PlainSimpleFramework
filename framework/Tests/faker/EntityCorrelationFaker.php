@@ -46,9 +46,9 @@ class EntityCorrelationFaker
         return self::$instance;
     }
 
-    public function make(?int $id, TestEntity $correlated, string $username): EntityCorrelation
+    public function make(?int $id, int $correlatedId, string $username): EntityCorrelation
     {
-        return new EntityCorrelation($id, $correlated, $username);
+        return new EntityCorrelation($id, $correlatedId, $username);
     }
 
     public function reset(): void

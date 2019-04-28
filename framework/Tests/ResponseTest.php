@@ -55,12 +55,12 @@ class ResponseTest extends TestCase
             '    {' . PHP_EOL .
             '        "id": ' . $id1 . ',' . PHP_EOL .
             '        "columnName1": "Lorem ipsum",' . PHP_EOL .
-            '        "columnName2": "dolor sit amet"' . PHP_EOL .
+            '        "column_name2": "dolor sit amet"' . PHP_EOL .
             '    },' . PHP_EOL .
             '    {' . PHP_EOL .
             '        "id": ' . $id2 . ',' . PHP_EOL .
             '        "columnName1": "consectetur adipiscing",' . PHP_EOL .
-            '        "columnName2": "elit."' . PHP_EOL .
+            '        "column_name2": "elit."' . PHP_EOL .
             '    }' . PHP_EOL .
             ']',
             $output

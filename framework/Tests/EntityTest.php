@@ -19,7 +19,7 @@ class EntityTest extends TestCase
 
         $retrievedEntity = $mapper->find($id);
         $this->assertEquals('Lorem ipsum', $retrievedEntity->get('columnName1'));
-        $this->assertEquals('dolor sit amet', $retrievedEntity->get('columnName2'));
+        $this->assertEquals('dolor sit amet', $retrievedEntity->get('column_name2'));
     }
 
     public function testItCanUpdate()
@@ -30,12 +30,12 @@ class EntityTest extends TestCase
 
         $retrievedEntity = $mapper->find($id);
         $retrievedEntity->set('columnName1', 'new value for col1');
-        $retrievedEntity->set('columnName2', 'new value for col2');
+        $retrievedEntity->set('column_name2', 'new value for col2');
         $mapper->update($retrievedEntity);
 
         $updatedEntity = $mapper->find($id);
         $this->assertEquals('new value for col1', $updatedEntity->get('columnName1'));
-        $this->assertEquals('new value for col2', $updatedEntity->get('columnName2'));
+        $this->assertEquals('new value for col2', $updatedEntity->get('column_name2'));
     }
 
     public function testItCanDelete()
@@ -54,7 +54,7 @@ class EntityTest extends TestCase
     {
         $entity = EntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
 
-        $this->assertEquals('{"id":null,"columnName1":"Lorem ipsum","columnName2":"dolor sit amet"}', json_encode($entity));
+        $this->assertEquals('{"id":null,"columnName1":"Lorem ipsum","column_name2":"dolor sit amet"}', json_encode($entity));
     }
 
     public function testItCanFindAll()
@@ -85,13 +85,13 @@ class EntityTest extends TestCase
         $this->assertIsInt($id);
 
         $mapperCorrelation = new EntityMapperCorrelation();
-        $entityWithCorrelation = EntityCorrelationFaker::getInstance()->make(null, $entity, 'JohnDoe94');
+        $entityWithCorrelation = EntityCorrelationFaker::getInstance()->make(null, $entity->get('id'), 'JohnDoe94');
         $correlationId = $mapperCorrelation->insert($entityWithCorrelation);
         $this->assertIsInt($correlationId);
 
         $retrievedEntity = $mapperCorrelation->find($correlationId);
         $this->assertEquals($retrievedEntity->getCorrelated()->get('columnName1'), $entity->get('columnName1'));
-        $this->assertEquals($retrievedEntity->getCorrelated()->get('columnName2'), $entity->get('columnName2'));
+        $this->assertEquals($retrievedEntity->getCorrelated()->get('column_name2'), $entity->get('column_name2'));
     }
 
     public function testItIsAddableToACollection()
