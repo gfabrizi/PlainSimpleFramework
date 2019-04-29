@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/gfabrizi/PlainSimpleFramework.svg?branch=master)](https://travis-ci.com/gfabrizi/PlainSimpleFramework)
 [![codecov](https://codecov.io/gh/gfabrizi/PlainSimpleFramework/branch/master/graph/badge.svg)](https://codecov.io/gh/gfabrizi/PlainSimpleFramework)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c365567b49c64970b3ac082cca3a2516)](https://www.codacy.com/app/gfabrizi/PlainSimpleFramework?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gfabrizi/PlainSimpleFramework&amp;utm_campaign=Badge_Grade)
 
 # PlainSimpleFramework
 **What is this?**  
