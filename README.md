@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b8840fd59be44e16bd32cc1dbe1b24b4)](https://app.codacy.com/app/gfabrizi/PlainSimpleFramework?utm_source=github.com&utm_medium=referral&utm_content=gfabrizi/PlainSimpleFramework&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/gfabrizi/PlainSimpleFramework.svg?branch=master)](https://travis-ci.com/gfabrizi/PlainSimpleFramework)
 [![codecov](https://codecov.io/gh/gfabrizi/PlainSimpleFramework/branch/master/graph/badge.svg)](https://codecov.io/gh/gfabrizi/PlainSimpleFramework)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gfabrizi/PlainSimpleFramework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gfabrizi/PlainSimpleFramework/?branch=master)
