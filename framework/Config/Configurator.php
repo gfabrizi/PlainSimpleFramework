@@ -11,13 +11,17 @@ use PDO;
  */
 class Configurator
 {
+    /** @var Configurator $instance */
     private static $instance;
-    private $config;
-    private $dbConfig;
+
+    /** @var PDO $pdo */
     private $pdo;
 
     /** @var DbConnectorInterface $dbConnector */
     private $dbConnector;
+
+    private $config = [];
+    private $dbConfig = [];
 
     private function __construct()
     {
@@ -34,25 +38,22 @@ class Configurator
 
     private function setup(): void
     {
-        $dbConfig = [];
-        $config = [];
         if ('test' === $_ENV['APP_ENV']) {
-            $configFile = framework_path('/Config/config-test.php');
+            $configFile = framework_path('/Config/config_test.ini');
         } else {
-            $configFile = app_path('/Config/config.php');
+            $configFile = app_path('/Config/config.ini');
         }
-        require $configFile;
 
-        $this->config = $config;
-        $this->dbConfig = $dbConfig;
+        $configContent = parse_ini_file($configFile, true);
+        $this->config = $configContent['configuration'];
+        $this->dbConfig = $configContent['database'];
 
-        if ($config['dbType'] === 'mysql') {
-            $this->dbConnector = new MySqlConnector($dbConfig);
+        if ($this->config['dbType'] === 'mysql') {
+            $this->dbConnector = new MySqlConnector($this->dbConfig);
         } else {
-            $this->dbConnector = new SqliteConnector($dbConfig);
+            $this->dbConnector = new SqliteConnector($this->dbConfig);
         }
     }
-
 
     public function getPdo(): PDO
     {
@@ -62,7 +63,7 @@ class Configurator
         return $this->pdo;
     }
 
-    public function get(string $param, string $default = null)
+    public function get(string $param, string $default = null): string
     {
         return $this->config[$param] ?? $default;
     }

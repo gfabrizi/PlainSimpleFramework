@@ -34,7 +34,7 @@ php -S localhost:8000 -t my-app/web/
 Now you can open you web browser and go to `http://localhost:8000` to see your app.
 
 ### The config file
-There is a basic config file located at `app/config/config.php`; it contains the parameters used to connect to your MySql database and some other basic settings.
+There is a basic config file located at `app/config/config.ini`; it contains the parameters used to connect to your MySql database and some other basic settings.
 
 ### The router
 The route file is located in `web/index.php`; here you can declare all the routes that you want to manage.  
