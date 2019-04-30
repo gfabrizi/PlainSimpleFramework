@@ -38,7 +38,7 @@ class Configurator
 
     private function setup(): void
     {
-        if ('test' === $_ENV['APP_ENV']) {
+        if (isset($_ENV['APP_ENV']) && ('test' === $_ENV['APP_ENV'])) {
             $configFile = framework_path('/Config/config_test.ini');
         } else {
             $configFile = app_path('/Config/config.ini');
