@@ -40,10 +40,10 @@ There is a basic config file located at `app/config/config.ini`; it contains the
 The route file is located in `web/index.php`; here you can declare all the routes that you want to manage.  
 The `Router` component has 4 methods, each one corresponding to one HTTP verb:
 
-*  `get()`
-*  `post()`
-*  `put()`
-*  `delete()`
+*   `get()`
+*   `post()`
+*   `put()`
+*   `delete()`
 
 You can define your routes with a callback:
 ```php
@@ -101,7 +101,7 @@ Identity mappers are what `map` an Entity to the corresponding db entry. You can
 Each Entity should have one Identity Mapper, and each Identity Mapper should extends `framework\Mappers\IdentityMapper` abstract class.  
 For each mapper you have to implement:
 
-*  `getTargetClass()` returns the name of the Entity class
+*   `getTargetClass()` returns the name of the Entity class
 
 You can provide your own code for the `doInsert()` and `doUpdate()` methods; otherwise, generic ones will be used.  
 If you want to customize the way datas are casted to Entity when you retrieve them from db (for instance if your Entity has correlation with another Entity), then you should implement your own `doHydrateEntity()` method.  
@@ -128,7 +128,8 @@ From your base layout you can output the view code by accessing the `$contentInL
 ### Responses
 There are 2 Responses available out of the box:
 
-*  `framework\Responses\Response` used to return an HTML view  
+*   `framework\Responses\Response` used to return an HTML view  
 You can pass to the `Response` constructor: the view you intend to use, then an array with data you want to pass to the view and finally an optional HTTP status code (default is 200). 
-*  `framework\Responses\JsonResponse` used to return a JSON response
+
+*   `framework\Responses\JsonResponse` used to return a JSON response
 You can pass to the `JsonResponse` constructor: the data you wish to output (preferably as an array) and an optional HTTP status code (default is 200).
