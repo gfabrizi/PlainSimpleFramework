@@ -3,17 +3,13 @@ namespace gfabrizi\PlainSimpleFramework\Responses;
 
 use gfabrizi\PlainSimpleFramework\Mappers\Collection;
 
-class JsonResponse implements ResponseInterface
+class JsonResponse extends BaseResponse
 {
     public function __construct($data, int $code = 200)
     {
-        http_response_code($code);
-        if (false === headers_sent()) {
-            header('Content-Type: application/json;charset=utf-8');
-        }
+        $this->sendHeader('Content-Type: application/json;charset=utf-8');
         if ($data) {
-            $output = $this->manageResponse($data);
-            echo $output;
+            $this->send($this->manageResponse($data), $code);
         }
     }
 

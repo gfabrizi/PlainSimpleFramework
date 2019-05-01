@@ -49,12 +49,12 @@ class Request implements RequestInterface
         if ($this->get('requestMethod') === 'GET') {
             foreach ($_GET as $key => $value)
             {
-                $result[$key] = filter_var($_GET[$key], FILTER_SANITIZE_SPECIAL_CHARS);
+                $result[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         } else if ($this->get('requestMethod') === 'POST') {
             foreach ($_POST as $key => $value)
             {
-                $result[$key] = filter_var($_POST[$key], FILTER_SANITIZE_SPECIAL_CHARS);
+                $result[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         } else if ($this->get('requestMethod') === 'PUT') {
             $result[] = file_get_contents('php://input');

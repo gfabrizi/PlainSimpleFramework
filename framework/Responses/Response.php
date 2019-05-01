@@ -3,7 +3,7 @@ namespace gfabrizi\PlainSimpleFramework\Responses;
 
 use gfabrizi\PlainSimpleFramework\Config\Configurator;
 
-class Response implements ResponseInterface
+class Response extends BaseResponse
 {
     private $view;
     private $defaultLayout;
@@ -11,13 +11,12 @@ class Response implements ResponseInterface
 
     public function __construct(string $view, array $data = [], int $code = 200)
     {
-        $this->defaultLayout = Configurator::getInstance()->get('defaultLayout', 'BaseLayout');
-        $this->viewsUri = Configurator::getInstance()->get('viewsUri', '/Views');
+        $configurator = Configurator::getInstance();
+        $this->defaultLayout = $configurator->get('defaultLayout', 'BaseLayout');
+        $this->viewsUri = $configurator->get('viewsUri', '/Views');
 
         $this->view = $view;
-        http_response_code($code);
-        $output = $this->manageResponse($data);
-        echo $output;
+        $this->send($this->manageResponse($data), $code);
     }
 
     /**
@@ -37,8 +36,7 @@ class Response implements ResponseInterface
 
         ob_start();
         require app_path($this->viewsUri . '/' . $_mainLayout . '.php');
-        $output = ob_get_clean();
 
-        return $output;
+        return ob_get_clean();
     }
 }

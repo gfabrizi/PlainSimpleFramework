@@ -5,8 +5,11 @@ use gfabrizi\PlainSimpleFramework\Config\Configurator;
 
 class Router
 {
+    /** @var RequestInterface $pdo */
     private $request;
+
     private $namespace;
+
     private $get = [];
     private $post = [];
     private $put = [];
