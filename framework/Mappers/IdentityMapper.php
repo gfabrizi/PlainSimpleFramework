@@ -351,15 +351,14 @@ abstract class IdentityMapper
 
     protected function doHydrateEntity(array $raw): EntityInterface
     {
-        $param = [];
-        $param[] = isset($raw['id']) ? (int)$raw['id'] : null;
+        $targetClass = $this->getTargetClass();
+        $entity = new $targetClass();
 
-        foreach ($this->getTargetClass()::getFields(true) as $field) {
-            $param[] = $raw[$field] ?? null;
+        foreach ($this->getTargetClass()::getFieldsWithAttributes() as $field => $params) {
+            $entity->set($field, $raw[$field]);
         }
 
-        $targetClass = $this->getTargetClass();
-        return new $targetClass(...$param);
+        return $entity;
     }
 
     abstract public function getTargetClass(): string;

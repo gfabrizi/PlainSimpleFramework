@@ -7,16 +7,11 @@ use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 class CorrelationEntity extends BaseEntity
 {
     protected static $tableName = 'entity_correlation';
-    protected static $fields = ['id', 'correlated_id', 'username'];
-
-    public function __construct(?int $id, int $correlatedId, string $username)
-    {
-        parent::__construct();
-
-        $this->set('id', $id);
-        $this->set('correlated_id', $correlatedId);
-        $this->set('username', $username);
-    }
+    protected static $fields = [
+        'id' => ['type' => 'int'],
+        'correlated_id' => [],
+        'username' => []
+    ];
 
     public function getCorrelated(): EntityInterface
     {

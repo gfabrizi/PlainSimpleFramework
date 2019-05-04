@@ -30,6 +30,17 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
      */
     public static function getFields(bool $removeId = false): array
     {
+        return array_keys(self::getFieldsWithAttributes($removeId));
+    }
+
+    /**
+     * Returns an array with the db fields (columns) of the Entity plus the params for each field
+     *
+     * @param bool $removeId hides/shows the 'id' field from the results
+     * @return array
+     */
+    public static function getFieldsWithAttributes(bool $removeId = false): array
+    {
         if (true === $removeId){
             $fields = static::$fields;
             $key = array_search('id', $fields, true);
@@ -77,9 +88,34 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
     public function set($property, $value): EntityInterface
     {
         if (isset($this->attributes[$property])) {
+            $field = $this::getFieldsWithAttributes()[$property];
+            if(isset($field['type'])) {
+                $value = $this->castAs($field['type'], $value ?? null);
+            }
             $this->attributes[$property]['value'] = $value;
         }
         return $this;
+    }
+
+    private function castAs(string $type, $value)
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        switch ($type) {
+            case 'int':
+                return (int)$value;
+                break;
+            case 'float':
+                return (float)$value;
+                break;
+            case 'string':
+                return (string)$value;
+                break;
+            default:
+                return $value;
+        }
     }
 
     /**

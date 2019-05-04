@@ -47,7 +47,12 @@ class CorrelationEntityFaker
 
     public function make(?int $id, int $correlatedId, string $username): CorrelationEntity
     {
-        return new CorrelationEntity($id, $correlatedId, $username);
+        $entity = new CorrelationEntity();
+        $entity->set('id', $id)
+            ->set('correlated_id', $correlatedId)
+            ->set('username', $username);
+
+        return $entity;
     }
 
     public function reset(): void

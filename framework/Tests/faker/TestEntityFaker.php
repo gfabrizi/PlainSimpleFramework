@@ -47,7 +47,12 @@ class TestEntityFaker
 
     public function make(?int $id, $columnName1, $columnName2): TestEntity
     {
-        return new TestEntity($id, $columnName1, $columnName2);
+        $entity = new TestEntity();
+        $entity->set('id', $id)
+            ->set('columnName1', $columnName1)
+            ->set('column_name2', $columnName2);
+
+        return $entity;
     }
 
     public function reset(): void
