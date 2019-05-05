@@ -81,19 +81,15 @@ An Entity class should extends the `framework\Entities\BaseEntity` abstract clas
 class User extends BaseEntity
 {
     protected static $tableName = 'users';
-    protected static $fields = ['id', 'first_name', 'last_name'];
-
-    public function __construct(?int $id, string $firstName, string $lastName)
-    {
-        parent::__construct();
-
-        $this->set('id', $id);
-        $this->set('first_name', $firstName);
-        $this->set('last_name', $lastName);
-    }
+    protected static $fields = [
+        'id' => ['type' => 'int'],
+        'first_name' => [],
+        'last_name' => []
+    ];
 }
 ```
-in the `$tablename` property you have to specify the name of the table this Entity refers to; in the `$fields` property you should write an array with che column names of the table.
+in the `$tablename` property you have to specify the name of the table this Entity refers to; in the `$fields` property you should write an array in wich each field is a column name on the db (key) plus an array of optional parameters (value).  
+For now you can only specify the base data type of the column ('int', 'string' or 'float'). You can omit the optional parameters altogheter; in this case you still have to specify an empty array (i.e. `first_name' => []`).
 
 ### Identity mappers
 Identity mappers are what `map` an Entity to the corresponding db entry. You can place Mappers in `app/Mappers`.
