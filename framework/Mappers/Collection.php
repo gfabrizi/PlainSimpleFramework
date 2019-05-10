@@ -53,13 +53,8 @@ class Collection implements Iterator, Countable
             throw new RuntimeException('This is a collection of type ' . $class);
         }
 
-        $this->notifyAccess();
         $this->entities[$this->total] = $entity;
         $this->total++;
-    }
-
-    protected function notifyAccess()
-    {
     }
 
     /**
@@ -68,10 +63,8 @@ class Collection implements Iterator, Countable
      * @param $num
      * @return mixed|null
      */
-    private function getRow($num)
+    public function get($num)
     {
-        $this->notifyAccess();
-
         if ($num >= $this->total || $num < 0) {
             return null;
         }
@@ -95,7 +88,7 @@ class Collection implements Iterator, Countable
 
     public function current()
     {
-        return $this->getRow($this->pointer);
+        return $this->get($this->pointer);
     }
 
     public function key()
@@ -105,7 +98,7 @@ class Collection implements Iterator, Countable
 
     public function next()
     {
-        $row = $this->getRow($this->pointer);
+        $row = $this->get($this->pointer);
 
         if (null !== $row) {
             $this->pointer++;
