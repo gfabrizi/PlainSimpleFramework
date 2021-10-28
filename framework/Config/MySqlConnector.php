@@ -3,14 +3,22 @@ namespace gfabrizi\PlainSimpleFramework\Config;
 
 use PDO;
 
-class MySqlConnector implements DbConnectorInterface
+final class MySqlConnector implements DbConnectorInterface
 {
-    private $pdo;
-    private $dbConfig;
+    private PDO $pdo;
 
     public function __construct(array $dbConfig)
     {
-        $this->dbConfig = $dbConfig;
+        $dsn = $this->getDsn(
+            $dbConfig['host'],
+            $this->dbConfig['port'] ?? 3306,
+            $dbConfig['dbName']
+        );
+        $this->pdo = new PDO(
+            $dsn,
+            $dbConfig['username'],
+            $dbConfig['password']
+        );
     }
 
     private function getDsn(string $host, string $port, string $dbName): string
@@ -20,19 +28,6 @@ class MySqlConnector implements DbConnectorInterface
 
     public function getPdo(): PDO
     {
-        if (null === $this->pdo) {
-            $dsn = $this->getDsn(
-                $this->dbConfig['host'],
-                $this->dbConfig['port'] ?? 3306,
-                $this->dbConfig['dbName']
-            );
-            $this->pdo = new PDO(
-                $dsn,
-                $this->dbConfig['username'],
-                $this->dbConfig['password']
-            );
-        }
         return $this->pdo;
     }
-
 }

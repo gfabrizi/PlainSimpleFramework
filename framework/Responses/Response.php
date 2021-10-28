@@ -5,9 +5,9 @@ use gfabrizi\PlainSimpleFramework\Config\Configurator;
 
 class Response extends BaseResponse
 {
-    private $view;
-    private $defaultLayout;
-    private $viewsUri;
+    private string $view;
+    private string $defaultLayout;
+    private string $viewsUri;
 
     public function __construct(string $view, array $data = [], int $code = 200)
     {
@@ -22,8 +22,8 @@ class Response extends BaseResponse
     /**
      * Manages the response output
      *
-     * @param $data
-     * @return false|string
+     * @param array $data
+     * @return string
      */
     private function manageResponse(array $data): string
     {

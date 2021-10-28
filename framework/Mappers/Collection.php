@@ -14,12 +14,12 @@ use RuntimeException;
  */
 class Collection implements Iterator, Countable
 {
-    protected $mapper;
-    protected $total = 0;
-    protected $raw = [];
+    protected ?IdentityMapper $mapper;
+    protected int $total = 0;
+    protected array $raw = [];
 
-    private $pointer = 0;
-    private $entities = [];
+    private int $pointer = 0;
+    private array $entities = [];
 
     /**
      * Collection constructor.
@@ -61,9 +61,9 @@ class Collection implements Iterator, Countable
      * Creates an Entity from the results row specified
      *
      * @param $num
-     * @return mixed|null
+     * @return mixed
      */
-    public function get($num)
+    public function get($num): mixed
     {
         if ($num >= $this->total || $num < 0) {
             return null;
@@ -81,7 +81,7 @@ class Collection implements Iterator, Countable
         return null;
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->pointer = 0;
     }
@@ -91,12 +91,12 @@ class Collection implements Iterator, Countable
         return $this->get($this->pointer);
     }
 
-    public function key()
+    public function key(): float|bool|int|string|null
     {
         return $this->pointer;
     }
 
-    public function next()
+    public function next(): void
     {
         $row = $this->get($this->pointer);
 
@@ -105,7 +105,7 @@ class Collection implements Iterator, Countable
         }
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return (null !== $this->current());
     }
@@ -115,7 +115,7 @@ class Collection implements Iterator, Countable
         return $this->mapper->getTargetClass();
     }
 
-    public function count()
+    public function count(): int
     {
         return $this->total;
     }

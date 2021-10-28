@@ -4,9 +4,9 @@ namespace gfabrizi\PlainSimpleFramework\Tests;
 use gfabrizi\PlainSimpleFramework\Http\Request;
 use PHPUnit\Framework\TestCase;
 
-class RequestTest extends TestCase
+final class RequestTest extends TestCase
 {
-    public function testItCanManageGetParameters()
+    public function testItCanManageGetParameters(): void
     {
         $_GET['foo'] = 'bar';
         $_GET['Lorem'] = 'Ipsum';
@@ -16,7 +16,7 @@ class RequestTest extends TestCase
         $this->assertEquals(['foo' => 'bar', 'Lorem' => 'Ipsum'], $request->getBody());
     }
 
-    public function testItCanManagePostParameters()
+    public function testItCanManagePostParameters(): void
     {
         $_POST['Dolor'] = 'Sit amet';
         $_POST['Lorem'] = 'Ipsum';

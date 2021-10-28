@@ -6,14 +6,11 @@ use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntity;
 use PDO;
 use PDOException;
 
-class TestEntityFaker
+final class TestEntityFaker
 {
-    private static $instance;
+    private static ?TestEntityFaker $instance = null;
 
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
     private function __construct()
     {

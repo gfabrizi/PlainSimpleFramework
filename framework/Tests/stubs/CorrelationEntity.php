@@ -4,10 +4,10 @@ namespace gfabrizi\PlainSimpleFramework\Tests\stubs;
 use gfabrizi\PlainSimpleFramework\Entities\BaseEntity;
 use gfabrizi\PlainSimpleFramework\Entities\EntityInterface;
 
-class CorrelationEntity extends BaseEntity
+final class CorrelationEntity extends BaseEntity
 {
-    protected static $tableName = 'entity_correlation';
-    protected static $fields = [
+    protected static string $tableName = 'entity_correlation';
+    protected static array $fields = [
         'id' => ['type' => 'int'],
         'correlated_id' => [],
         'username' => []
@@ -19,7 +19,7 @@ class CorrelationEntity extends BaseEntity
         return $mapper->find($this->get('correlated_id'));
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->get('id'),
