@@ -3,28 +3,23 @@ namespace gfabrizi\PlainSimpleFramework\Config;
 
 use PDO;
 
-class SqliteConnector implements DbConnectorInterface
+final class SqliteConnector implements DbConnectorInterface
 {
-    private $pdo;
-    private $dbConfig;
+    private PDO $pdo;
 
     public function __construct(array $dbConfig)
     {
-        $this->dbConfig = $dbConfig;
+        if ('memory' === $dbConfig['filename']) {
+            $dsn = 'sqlite::memory:';
+        } else {
+            $dsn = 'sqlite:' . __DIR__ . '/../..' . $dbConfig['filename'];
+        }
+
+        $this->pdo = new PDO($dsn);
     }
 
     public function getPdo(): PDO
     {
-        if (null === $this->pdo) {
-            if ('memory' === $this->dbConfig['filename']) {
-                $dsn = 'sqlite::memory:';
-            } else {
-                $dsn = 'sqlite:' . __DIR__ . '/../..' . $this->dbConfig['filename'];
-            }
-
-            $this->pdo = new PDO($dsn);
-        }
         return $this->pdo;
     }
-
 }

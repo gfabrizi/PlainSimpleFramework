@@ -3,21 +3,17 @@ namespace gfabrizi\PlainSimpleFramework\Http;
 
 use gfabrizi\PlainSimpleFramework\Config\Configurator;
 
-class Router
+final class Router
 {
-    /** @var RequestInterface $pdo */
-    private $request;
+    private string $namespace;
 
-    private $namespace;
+    private array $get = [];
+    private array $post = [];
+    private array $put = [];
+    private array $delete = [];
 
-    private $get = [];
-    private $post = [];
-    private $put = [];
-    private $delete = [];
-
-    public function __construct(RequestInterface $request)
+    public function __construct(private RequestInterface $request)
     {
-        $this->request = $request;
         $this->namespace = Configurator::getInstance()->get('controllersNamespace', 'App\Controllers');
     }
 
@@ -55,14 +51,12 @@ class Router
             return '/';
         }
 
-        if (false !== strpos($route, '?')) {
+        if (str_contains($route, '?')) {
             $arr = explode('?', $route, 2);
             $result = $arr[0];
         }
 
-        $result = preg_replace('/(\/\{.*\}\/?)$/', '/{param}', $result);
-
-        return $result;
+        return preg_replace('/(\/{.*}\/?)$/', '/{param}', $result);
     }
 
     private function defaultRequestHandler(): void
@@ -113,7 +107,6 @@ class Router
                 call_user_func_array(array($controller, $method), $param);
             } else {
                 $this->defaultRequestHandler();
-                return;
             }
         }
     }

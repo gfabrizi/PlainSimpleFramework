@@ -16,7 +16,11 @@ class Request implements RequestInterface
         }
     }
 
-    private function toCamelCase($string)
+    /**
+     * @param $string
+     * @return array|string
+     */
+    private function toCamelCase($string): array|string
     {
         $result = strtolower($string);
 
@@ -42,6 +46,9 @@ class Request implements RequestInterface
         }
     }
 
+    /**
+     * @return array
+     */
     public function getBody(): array
     {
         $result = array();

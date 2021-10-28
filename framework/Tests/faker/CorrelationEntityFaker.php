@@ -6,14 +6,11 @@ use gfabrizi\PlainSimpleFramework\Tests\stubs\CorrelationEntity;
 use PDO;
 use PDOException;
 
-class CorrelationEntityFaker
+final class CorrelationEntityFaker
 {
-    private static $instance;
+    private static ?CorrelationEntityFaker $instance = null;
 
-    /**
-     * @var PDO
-     */
-    private $pdo;
+    private PDO $pdo;
 
     private function __construct()
     {

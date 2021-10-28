@@ -15,16 +15,13 @@ class Configurator
     private static $instance;
 
     /** @var PDO $pdo */
-    private $pdo;
+    private PDO $pdo;
 
-    /** @var DbConnectorInterface $dbConnector */
-    private $dbConnector;
-
-    private $config = [];
-    private $dbConfig = [];
+    private array $config = [];
 
     private function __construct()
     {
+        // Singleton design pattern
     }
 
     public static function getInstance(): Configurator
@@ -46,20 +43,18 @@ class Configurator
 
         $configContent = parse_ini_file($configFile, true);
         $this->config = $configContent['configuration'];
-        $this->dbConfig = $configContent['database'];
 
         if ($this->config['dbType'] === 'mysql') {
-            $this->dbConnector = new MySqlConnector($this->dbConfig);
+            $dbConnector = new MySqlConnector($configContent['database']);
         } else {
-            $this->dbConnector = new SqliteConnector($this->dbConfig);
+            $dbConnector = new SqliteConnector($configContent['database']);
         }
+
+        $this->pdo = $dbConnector->getPdo();
     }
 
     public function getPdo(): PDO
     {
-        if (null === $this->pdo) {
-            $this->pdo = $this->dbConnector->getPdo();
-        }
         return $this->pdo;
     }
 

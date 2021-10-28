@@ -5,10 +5,10 @@ use JsonSerializable;
 
 abstract class BaseEntity implements EntityInterface, JsonSerializable
 {
-    protected static $tableName;
-    protected static $fields = [];
-    protected static $join = [];
-    protected $attributes = [];
+    protected static string $tableName;
+    protected static array $fields = [];
+    protected static array $join = [];
+    protected array $attributes = [];
 
     public function __construct()
     {
@@ -17,7 +17,7 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
         }
     }
 
-    public static function getTableName()
+    public static function getTableName(): string
     {
         return static::$tableName;
     }
@@ -68,9 +68,9 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
      * Magic method to GET Entity properties
      *
      * @param $property string  Column name of the attribute to retrieve
-     * @return mixed|null
+     * @return mixed
      */
-    public function get($property)
+    public function get($property): mixed
     {
         if (isset($this->attributes[$property])) {
             return $this->attributes[$property]['value'];
@@ -97,33 +97,31 @@ abstract class BaseEntity implements EntityInterface, JsonSerializable
         return $this;
     }
 
-    private function castAs(string $type, $value)
+    /**
+     * @param string $type
+     * @param $value
+     * @return float|int|string|null
+     */
+    private function castAs(string $type, $value): float|int|string|null
     {
         if (null === $value) {
             return null;
         }
 
-        switch ($type) {
-            case 'int':
-                return (int)$value;
-                break;
-            case 'float':
-                return (float)$value;
-                break;
-            case 'string':
-                return (string)$value;
-                break;
-            default:
-                return $value;
-        }
+        return match ($type) {
+            'int' => (int)$value,
+            'float' => (float)$value,
+            'string' => (string)$value,
+            default => $value,
+        };
     }
 
     /**
      * Generic JSON Serialize method
      *
-     * @return array|mixed
+     * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $data = array();
 

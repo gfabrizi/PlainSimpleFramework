@@ -1,16 +1,18 @@
 <?php
 namespace gfabrizi\PlainSimpleFramework\Tests;
 
+use Exception;
 use gfabrizi\PlainSimpleFramework\Mappers\Collection;
 use gfabrizi\PlainSimpleFramework\Tests\faker\CorrelationEntityFaker;
 use gfabrizi\PlainSimpleFramework\Tests\faker\TestEntityFaker;
 use gfabrizi\PlainSimpleFramework\Tests\stubs\CorrelationEntityMapper;
 use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntityMapper;
+use JsonException;
 use PHPUnit\Framework\TestCase;
 
-class EntityTest extends TestCase
+final class EntityTest extends TestCase
 {
-    public function testItCanCreateAndRetrieve()
+    public function testItCanCreateAndRetrieve(): void
     {
         $mapper = new TestEntityMapper();
         $entity = TestEntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
@@ -22,7 +24,7 @@ class EntityTest extends TestCase
         $this->assertEquals('dolor sit amet', $retrievedEntity->get('column_name2'));
     }
 
-    public function testItCanUpdate()
+    public function testItCanUpdate(): void
     {
         $mapper = new TestEntityMapper();
         $entity = TestEntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
@@ -38,7 +40,7 @@ class EntityTest extends TestCase
         $this->assertEquals('new value for col2', $updatedEntity->get('column_name2'));
     }
 
-    public function testItCanDelete()
+    public function testItCanDelete(): void
     {
         $mapper = new TestEntityMapper();
         $entity = TestEntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
@@ -50,14 +52,20 @@ class EntityTest extends TestCase
         $this->assertNull($retrievedEntity);
     }
 
-    public function testItCanJsonEncodeItself()
+    /**
+     * @throws JsonException
+     */
+    public function testItCanJsonEncodeItself(): void
     {
         $entity = TestEntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
 
-        $this->assertEquals('{"id":null,"columnName1":"Lorem ipsum","column_name2":"dolor sit amet"}', json_encode($entity));
+        $this->assertEquals('{"id":null,"columnName1":"Lorem ipsum","column_name2":"dolor sit amet"}', json_encode($entity, JSON_THROW_ON_ERROR));
     }
 
-    public function testItCanFindAll()
+    /**
+     * @throws Exception
+     */
+    public function testItCanFindAll(): void
     {
         $mapper = new TestEntityMapper();
         $this->assertCount(0, $mapper->findAll());
@@ -77,7 +85,7 @@ class EntityTest extends TestCase
         $this->assertCount(3, $retrievedEntities);
     }
 
-    public function testItCanCreateAnEntityWithCorrelation()
+    public function testItCanCreateAnEntityWithCorrelation(): void
     {
         $mapper = new TestEntityMapper();
         $entity = TestEntityFaker::getInstance()->make(null, 'Lorem ipsum', 'dolor sit amet');
@@ -94,7 +102,7 @@ class EntityTest extends TestCase
         $this->assertEquals($retrievedEntity->getCorrelated()->get('column_name2'), $entity->get('column_name2'));
     }
 
-    public function testItIsAddableToACollection()
+    public function testItIsAddableToACollection(): void
     {
         $mapper = new TestEntityMapper();
         $collection = new Collection([], $mapper);

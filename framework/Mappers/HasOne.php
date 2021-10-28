@@ -9,16 +9,11 @@ namespace gfabrizi\PlainSimpleFramework\Mappers;
  */
 class HasOne implements RelationInterface
 {
-    private $targetClass;
-    private $localColumn;
-    private $foreignColumn;
-
-    public function __construct(string $className, string $localColumn, string $foreignColumn)
-    {
-        $this->targetClass = $className;
-        $this->localColumn = $localColumn;
-        $this->foreignColumn = $foreignColumn;
-    }
+    public function __construct(
+        private string $targetClass,
+        private string $localColumn,
+        private string $foreignColumn
+    ) {}
 
     public function getTargetClass(): string
     {

@@ -6,9 +6,9 @@ use gfabrizi\PlainSimpleFramework\Http\RequestInterface;
 use gfabrizi\PlainSimpleFramework\Http\Router;
 use PHPUnit\Framework\TestCase;
 
-class RouterTest extends TestCase
+final class RouterTest extends TestCase
 {
-    public function testItCanMakeAGet()
+    public function testItCanMakeAGet(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/']);
@@ -23,7 +23,7 @@ class RouterTest extends TestCase
         $this->assertEquals('Lorem ipsum dolor sit amet', $output);
     }
 
-    public function testItCanMakeAPost()
+    public function testItCanMakeAPost(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'POST', 'request_uri' => '/users/new']);
@@ -38,7 +38,7 @@ class RouterTest extends TestCase
         $this->assertEquals('This is a post call on /users/new route', $output);
     }
 
-    public function testItCanMakeAPut()
+    public function testItCanMakeAPut(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'PUT', 'request_uri' => '/users/new']);
@@ -53,7 +53,7 @@ class RouterTest extends TestCase
         $this->assertEquals('This is a put call on /users/new route', $output);
     }
 
-    public function testItCanMakeADelete()
+    public function testItCanMakeADelete(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'DELETE', 'request_uri' => '/users/42']);
@@ -68,7 +68,7 @@ class RouterTest extends TestCase
         $this->assertEquals('This is a delete call on /users/new route', $output);
     }
 
-    public function testItCanUseControllerAction()
+    public function testItCanUseControllerAction(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/dashboard']);
@@ -83,7 +83,7 @@ class RouterTest extends TestCase
         $this->assertEquals('Text outputted from a Controller@Action', $output);
     }
 
-    public function testItGives404OnAPostToAGet()
+    public function testItGives404OnAPostToAGet(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/users']);
@@ -96,7 +96,7 @@ class RouterTest extends TestCase
         $this->assertEquals(404, http_response_code());
     }
 
-    public function testItGives404OnInexistentController()
+    public function testItGives404OnInexistentController(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/users']);
@@ -109,7 +109,7 @@ class RouterTest extends TestCase
         $this->assertEquals(404, http_response_code());
     }
 
-    public function testItSupportVariableSlug()
+    public function testItSupportVariableSlug(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/users/42']);

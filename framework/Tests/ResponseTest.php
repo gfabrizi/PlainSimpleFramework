@@ -7,9 +7,9 @@ use gfabrizi\PlainSimpleFramework\Tests\faker\TestEntityFaker;
 use gfabrizi\PlainSimpleFramework\Tests\stubs\TestEntityMapper;
 use PHPUnit\Framework\TestCase;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
-    public function testItReturnsAJsonResponseArray()
+    public function testItReturnsAJsonResponseArray(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/dashboard']);
@@ -30,7 +30,7 @@ class ResponseTest extends TestCase
         );
     }
 
-    public function testItReturnsAJsonResponseCollection()
+    public function testItReturnsAJsonResponseCollection(): void
     {
         $mapper = new TestEntityMapper();
 
@@ -67,7 +67,7 @@ class ResponseTest extends TestCase
         );
     }
 
-    public function testItReturnsAResponseView()
+    public function testItReturnsAResponseView(): void
     {
         $request = new Request();
         $request->setHeaders(['request_method' => 'GET', 'request_uri' => '/lorem-ipsum']);

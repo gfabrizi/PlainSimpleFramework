@@ -4,7 +4,7 @@ namespace gfabrizi\PlainSimpleFramework\Tests\stubs;
 use gfabrizi\PlainSimpleFramework\Mappers\HasOne;
 use gfabrizi\PlainSimpleFramework\Mappers\IdentityMapper;
 
-class CorrelationEntityMapper extends IdentityMapper
+final class CorrelationEntityMapper extends IdentityMapper
 {
     public function __construct()
     {

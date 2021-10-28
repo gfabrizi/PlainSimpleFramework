@@ -9,26 +9,16 @@ use PDOStatement;
 
 abstract class IdentityMapper
 {
-    /** @var PDO $pdo */
-    protected $pdo;
-    protected $tableName;
+    protected PDO $pdo;
+    protected string $tableName;
 
-    /** @var PDOStatement $selectStmt */
-    protected $selectStmt;
+    protected ?PDOStatement $selectStmt = null;
+    protected ?PDOStatement $selectAllStmt = null;
+    protected ?PDOStatement $insertStmt = null;
+    protected ?PDOStatement $updateStmt = null;
+    protected ?PDOStatement $removeStmt = null;
 
-    /** @var PDOStatement $selectAllStmt */
-    protected $selectAllStmt;
-
-    /** @var PDOStatement $insertStmt */
-    protected $insertStmt;
-
-    /** @var PDOStatement $updateStmt */
-    protected $updateStmt;
-
-    /** @var PDOStatement $removeStmt */
-    protected $removeStmt;
-
-    protected $relations = [];
+    protected array $relations = [];
 
     public function __construct()
     {
@@ -46,8 +36,7 @@ abstract class IdentityMapper
     protected function getSelectQuery(string $tableName): string
     {
         $selectAllQuery = $this->getSelectAllQuery($tableName);
-        $query = sprintf('%s WHERE %s.id=?', $selectAllQuery, $this->getTargetClass()::getAlias());
-        return $query;
+        return sprintf('%s WHERE %s.id=?', $selectAllQuery, $this->getTargetClass()::getAlias());
     }
 
     /**
@@ -163,7 +152,7 @@ abstract class IdentityMapper
     /**
      * Returns a Collection with all the table's rows
      *
-     * @return Collection
+     * @return Collection|null
      * @throws Exception
      */
     public function findAll(): ?Collection
