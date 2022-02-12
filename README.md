@@ -162,3 +162,9 @@ $logger = $container->get(Logger::class);
 $logger->doLog("This is a log");
 ```
 Unfortunately (for now) the dependency injection can be made only with concrete classes, not with interfaces.
+
+## Test suite
+The test suite can be run with the command:
+```sh
+/vendor/bin/phpunit --configuration framework/phpunit.xml
+```
