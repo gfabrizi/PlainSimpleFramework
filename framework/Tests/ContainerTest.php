@@ -11,7 +11,7 @@ final class ContainerTest extends TestCase
 {
     public function testItHasModel(): void
     {
-        $container = new Container;
+        $container = new Container();
         $hasLogger = $container->has(TestModelLogger::class);
 
         $this->assertTrue($hasLogger);
@@ -19,7 +19,7 @@ final class ContainerTest extends TestCase
 
     public function testItHasntModel(): void
     {
-        $container = new Container;
+        $container = new Container();
         $hasInexistentClass = $container->has(InexistentClass::class);
 
         $this->assertFalse($hasInexistentClass);
@@ -27,7 +27,7 @@ final class ContainerTest extends TestCase
 
     public function testItCanResolveDependency(): void
     {
-        $container = new Container;
+        $container = new Container();
         $logger = $container->get(TestModelLogger::class);
         $output = $logger->doLog("Lorem ipsum dolor sit amet");
 
@@ -38,7 +38,7 @@ final class ContainerTest extends TestCase
     {
         $this->expectException(NotFoundException::class);
 
-        $container = new Container;
+        $container = new Container();
         $instance = $container->get(TestDependencyUnsolved::class);
     }
 }

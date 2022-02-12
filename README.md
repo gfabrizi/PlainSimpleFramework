@@ -157,7 +157,7 @@ class FileLogger {
 }
 
 // In your Controller:
-$container = new Container;
+$container = new Container();
 $logger = $container->get(Logger::class);
 $logger->doLog("This is a log");
 ```
