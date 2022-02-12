@@ -26,12 +26,12 @@ composer create-project --prefer-dist --stability=dev gfabrizi/plain-simple-fram
 ```
 (here `my-app` is the name of the new folder where you want the project to be downloaded)
 
-Assuming that you have PHP >= 7.2 installed and configured on your machine, you can start a local web server with:
+Assuming that you have PHP >= 8.0 installed and configured on your machine, you can start a local web server with:
 ```bash
-php -S localhost:8000 -t my-app/web/
+php -S localhost:8080 -t my-app/web/
 ```
 
-Now you can open you web browser and go to `http://localhost:8000` to see your app.
+Now you can open you web browser and go to `http://localhost:8080` to see your app.
 
 ### The config file
 There is a basic config file located at `app/config/config.ini`; it contains the parameters used to connect to your MySql database and some other basic settings.
@@ -115,7 +115,7 @@ Custom Collections are not really necessaries, unless you want to customize the 
 
 ### Views
 Views are simple html files saved as `.php` file in `app/Views`.  
-You can specify a base layout for your view with the code:  
+You can specify a base layout for your view with the code:
 ```php
 <?php $_mainLayout = 'BaseLayout'; ?>
 ```
@@ -125,7 +125,40 @@ From your base layout you can output the view code by accessing the `$contentInL
 There are 2 Responses available out of the box:
 
 *   `framework\Responses\Response` used to return an HTML view  
-You can pass to the `Response` constructor: the view you intend to use, then an array with data you want to pass to the view and finally an optional HTTP status code (default is 200). 
+    You can pass to the `Response` constructor: the view you intend to use, then an array with data you want to pass to the view and finally an optional HTTP status code (default is 200).
 
 *   `framework\Responses\JsonResponse` used to return a JSON response
-You can pass to the `JsonResponse` constructor: the data you wish to output (preferably as an array) and an optional HTTP status code (default is 200).
+    You can pass to the `JsonResponse` constructor: the data you wish to output (preferably as an array) and an optional HTTP status code (default is 200).
+
+### Service Container
+PSF has a simple Service Container for dependency injection:
+
+```php
+// Model Logger depends on FileLogger
+class Logger {
+    public function __construct(private FileLogger $logger)
+    {
+    }
+    
+    public function doLog($message): void
+    {
+        $this->logger->log($message);
+    }
+}
+
+// Model FileLogger is a dependency of Logger
+class FileLogger {
+    private const LOGFILE = "/var/log/app.log";
+
+    public function log($message): void
+    {
+        file_put_contents(self::LOGFILE, $message . PHP_EOL, FILE_APPEND);
+    }
+}
+
+// In your Controller:
+$container = new Container;
+$logger = $container->get(Logger::class);
+$logger->doLog("This is a log");
+```
+Unfortunately (for now) the dependency injection can be made only with concrete classes, not with interfaces.
